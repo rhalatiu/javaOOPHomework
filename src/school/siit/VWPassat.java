@@ -12,4 +12,11 @@ public class VWPassat extends VW{
         this.chassisNumber = chassisNumber;
         this.tireSize = 17;
     }
+    @Override
+    public void shiftGear(int newGear){
+        if (newGear > this.gears || newGear <= 0)
+            return;
+        consumptionPer100Km -= 0.2f * consumptionPer100Km * (newGear - currentGear);
+        currentGear = newGear;
+    }
 }

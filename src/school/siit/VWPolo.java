@@ -13,4 +13,5 @@ public class VWPolo extends VW{
         this.chassisNumber = chassisNumber;
         this.tireSize = 15;
     }
+
 }

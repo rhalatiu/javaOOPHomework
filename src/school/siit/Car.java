@@ -5,7 +5,7 @@ public abstract class Car implements Vehicle{
     public void shiftGear(int newGear){
         if (newGear > this.gears || newGear <= 0)
             return;
-        consumptionPer100Km -= 0.1f*consumptionPer100Km * (newGear - currentGear);
+        consumptionPer100Km -= 0.1f * consumptionPer100Km * (newGear - currentGear);
         currentGear = newGear;
     }
     public float getAvailableFuel(){

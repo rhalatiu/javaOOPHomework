@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args) {
         //Car car = new Car();
         //Car car = new VW(27, "oiqe0934hkkadsn");
-        Car car = new VWPassat(35, "oiqe0934hkkadsn");
-        Car car3 = new MercedesSKlasse(30, "1987ddkshik289");
+        //Car car = new VWPassat(35, "oiqe0934hkkadsn");
+        Car car = new MercedesSKlasse(30, "1987ddkshik289");
 
         car.start();
 
