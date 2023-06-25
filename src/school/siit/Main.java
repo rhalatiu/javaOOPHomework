@@ -43,6 +43,6 @@ public class Main {
 
         car.stop();
 
-        car.print();
+      //  car.print();
     }
 }

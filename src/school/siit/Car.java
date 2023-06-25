@@ -1,62 +1,50 @@
 package school.siit;
 
 public abstract class Car implements Vehicle{
-
-    public void start(){
-        this.consumptionPer100Km = this.consumptionStat;
-        largerTires();
+	private FuelSystem fuelSystem;
+    private Gearbox gearbox;
+    private Engine engine;
+    private FuelConsumptionCalculator consumptionCalculator;
+    private CarFunctionality carFunctionality;
+    
+    
+    public Car() {
+        this.fuelSystem = new FuelSystem();
+        this.gearbox = new Gearbox();
+        this.engine = new Engine();
+        this.consumptionCalculator = new FuelConsumptionCalculator();
+        this.carFunctionality = carFunctionality;
     }
 
-    public void stop(){
-        this.print();
+    public void start() {
+        this.engine.start();
+        this.gearbox.setGear(1);
+        carFunctionality.largerTires();
+    }
+
+    public void stop() {
+        this.engine.stop();
+        carFunctionality.print();
         System.out.println("Car stopped");
         System.exit(1);
     }
 
-    public void shiftGear(int newGear){
-        if (newGear > this.gears || newGear <= 0)
-            return;
-
-        currentGear = newGear;
-
-        if (consumptionPer100Km <= 0)
-            this.stop();
+    public void shiftGear(int newGear) {
+        this.gearbox.setGear(newGear);
     }
 
-    public void largerTires(){
-        if (this.tireSize > 17)
-            this.consumptionPer100Km += 0.15 * this.consumptionPer100Km;
-    }
-
-    public float getAvailableFuel(){
-        return availableFuel;
-    }
-    public float getAverageFuelConsumption(){
-        return consumptionPer100Km;
-    }
-
-    @Override
     public void drive(double distance) {
-        double consumption = distance * this.consumptionPer100Km;
+        double consumption = this.consumptionCalculator.calculateFuelConsumption(distance, this.gearbox.getCurrentGear());
+        this.fuelSystem.consumeFuel(consumption);
 
-        if (this.availableFuel - (float)consumption <= 0){
-            this.print();
+        if (!this.fuelSystem.hasEnoughFuel()) {
+        	carFunctionality.print();
             System.out.println("Car stopped because it does not have enough fuel");
             System.exit(1);
         }
-        this.availableFuel = this.availableFuel - (float)consumption;
     }
-
-    public void print(){
-        float availableFuel = this.getAvailableFuel();
-
-        float fuelConsumedPer100Km = this.getAverageFuelConsumption();
-
-        System.out.println(availableFuel);
-        System.out.println(fuelConsumedPer100Km);
-    }
-
-    //private
+    
+  //private
     int fuelTankSize = 0;
     String fuelType = "";
     int gears = 0;
@@ -68,4 +56,6 @@ public abstract class Car implements Vehicle{
     protected float availableFuel = 0;
     protected int tireSize = 0;
     protected String chassisNumber = "";
+
+    
 }
